@@ -13,10 +13,15 @@ require('dotenv').config()
 var mongoose = require('mongoose')
 
 mongoose.connect('mongodb://localhost:27017/partiest')
+
+// Initial VIEW ENGINE NOT WORKING
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'))
 // app.set('view engine', 'ejs')
+
+// routes to all the api
 var routes = require('./config/routes')
+
 //Use of cors
 app.use(cors())
 

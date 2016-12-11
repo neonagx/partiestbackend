@@ -1,1 +1,80 @@
 var Professional = require('../models/Professional')
+
+module.exports = {
+  getAll: getAll,
+  createProfessional: createProfessional,
+  getProfessional: getProfessional,
+  updateProfessional: updateProfessional,
+  deleteProfessional: deleteProfessional
+}
+
+//GET ALL
+function getAll(req, res){
+  Professional.find(function(err, professionals){
+    if(err) res.json({message: 'Could not find any professional events'})
+
+    res.json({professionals: professionals})
+  }).select('-__v')
+}
+
+//POST
+function createProfessional(req, res){
+  var professional = new Professional(req.body)
+
+  professional.save(function(err){
+    if(err) res.json({message: 'Could not create professional event b/c:' + err})
+
+    res.json({professional: professional})
+  })
+}
+
+//SHOW
+function getProfessional(req, res){
+  var id = req.params.id
+
+  Professional.findById({_id: id}, function(err, professional){
+    if(err) res.json({message: 'Could not find professional event b/c: ' + err})
+
+    res.json({professional: professional})
+  }).select('-__v')
+}
+
+//UPDATE
+function updateProfessional(req, res){
+  var id = req.params.id
+
+  Professional.findById({_id: id}, function(err, professional){
+    if(err) res.json({message: 'Cannot find professional event b/c: ' + err})
+
+    if(req.body.organizer) professional.organizer = req.body.organizer
+    if(req.body.partyTitle) professional.partyTitle = req.body.partyTitle
+    if(req.body.company) professional.company = req.body.company
+    if(req.body.video) professional.video = req.body.video
+    if(req.body.map) professional.map = req.body.map
+    if(req.body.location) professional.location = req.body.location
+    if(req.body.email) professional.email = req.body.email
+    if(req.body.cellPhone) professional.cellPhone = req.body.cellPhone
+    if(req.body.officePhone) professional.officePhone = req.body.officePhone
+    if(req.body.attendees) professional.attendees = req.body.attendees
+    if(req.body.description) professional.description = req.body.description
+    if(req.body.publicOrPrivate) professional.publicOrPrivate = req.body.publicOrPrivate
+    if(req.body.sponsors) professional.sponsors = req.body.sponsors
+
+    professional.save(function(err){
+      if(err) res.json({message: 'Cannot update b/c: ' + err})
+
+      res.json({message: 'Professional event successfully updated', professional: professional})
+    })
+  }).select('-__v')
+}
+
+//DELETE
+function deleteProfessional(req, res){
+  var id = req.params.id
+
+  Professional.remove({_id: id}, function(err){
+    if(err) res.json({message: 'Cannot delete event b/c ' + err})
+
+    res.json({message: 'Professional Event Deleted'})
+  }).select('-__v')
+}
