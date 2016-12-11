@@ -1,14 +1,13 @@
-var express = require('express'),
-  path = require('path'),
-  favicon = require('serve-favicon'),
-  logger = require('morgan'),
-  // cookieParser = require('cookie-parser'),
-  bodyParser = require('body-parser'),
-  cors = require('cors'),
-  app = express()
+var express = require('express')
+var path = require('path')
+var favicon = require('serve-favicon')
+var cors = require('cors')
+var logger = require('morgan')
+var cookieParser = require('cookie-parser')
+var bodyParser = require('body-parser')
+var app = express()
 
 //use .env file to hide sensitive info
-
 require('dotenv').config()
 
 var mongoose = require('mongoose')
@@ -22,12 +21,12 @@ var routes = require('./config/routes')
 app.use(cors())
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 app.use(logger('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-// app.use(cookieParser())
-// app.use(express.static(path.join(__dirname, 'public')))
+app.use(cookieParser())
+app.use(express.static(path.join(__dirname, 'public')))
 
 //validate content
 app.use(validateContentType)
@@ -35,6 +34,8 @@ app.use(validateContentType)
 app.use(routes)
 
 app.use(addFailedAuthHeader)
+
+app.listen(3000)
 
 function validateContentType(req, res, next) {
   var methods = ['PUT', 'PATCH', 'POST'];
