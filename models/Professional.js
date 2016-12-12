@@ -12,7 +12,7 @@ var ProfessionalSchema = mongoose.Schema({
   officePhone: String,
   attendees: Number,
   description: String,
-  publicOrPrivate: Boolean,
+  publicOrPrivate: String,
   sponsors: String
 })
 
