@@ -13,7 +13,7 @@ function getAll(req, res){
   Professional.find(function(err, professionals){
     if(err) res.json({message: 'Could not find any professional events'})
 
-    res.json({professionals: professionals})
+    res.json(professionals)
   }).select('-__v')
 }
 
@@ -21,10 +21,10 @@ function getAll(req, res){
 function createProfessional(req, res){
   var professional = new Professional(req.body)
 
-  professional.save(function(err){
+  professional.save(function(err, savedProfessional){
     if(err) res.json({message: 'Could not create professional event b/c:' + err})
 
-    res.json({professional: professional})
+    res.json(savedProfessional)
   })
 }
 
@@ -32,10 +32,10 @@ function createProfessional(req, res){
 function getProfessional(req, res){
   var id = req.params.id
 
-  Professional.findById({_id: id}, function(err, professional){
+  Professional.findById(id, function(err, professional){
     if(err) res.json({message: 'Could not find professional event b/c: ' + err})
 
-    res.json({professional: professional})
+    res.json(professional)
   }).select('-__v')
 }
 
@@ -43,7 +43,7 @@ function getProfessional(req, res){
 function updateProfessional(req, res){
   var id = req.params.id
 
-  Professional.findById({_id: id}, function(err, professional){
+  Professional.findById(id, function(err, professional){
     if(err) res.json({message: 'Cannot find professional event b/c: ' + err})
 
     if(req.body.organizer) professional.organizer = req.body.organizer
@@ -60,10 +60,10 @@ function updateProfessional(req, res){
     if(req.body.publicOrPrivate) professional.publicOrPrivate = req.body.publicOrPrivate
     if(req.body.sponsors) professional.sponsors = req.body.sponsors
 
-    professional.save(function(err){
+    professional.save(function(err, updatedProfessional){
       if(err) res.json({message: 'Cannot update b/c: ' + err})
 
-      res.json({message: 'Professional event successfully updated', professional: professional})
+      res.json(updatedProfessional)
     })
   }).select('-__v')
 }
