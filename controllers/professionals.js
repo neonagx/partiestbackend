@@ -34,7 +34,7 @@ function getProfessional(req, res){
 
   Professional.findById(id, function(err, professional){
     if(err) res.json({message: 'Could not find professional event b/c: ' + err})
-
+    
     res.json(professional)
   }).select('-__v')
 }

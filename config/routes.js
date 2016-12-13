@@ -15,11 +15,11 @@ router.route('/api/me')
   .get(token.authenticate, usersController.me)
 
 router.route('/professionals')
-  .get(professionalsController.getAll)
-  .post(professionalsController.createProfessional)
+  .get(token.authenticate, professionalsController.getAll)
+  .post(token.authenticate, professionalsController.createProfessional)
 router.route('/professionals/:id')
-  .get(professionalsController.getProfessional)
-  .patch(professionalsController.updateProfessional)
-  .delete(professionalsController.deleteProfessional)
+  .get(token.authenticate, professionalsController.getProfessional)
+  .patch(token.authenticate, professionalsController.updateProfessional)
+  .delete(token.authenticate, professionalsController.deleteProfessional)
 
 module.exports = router
