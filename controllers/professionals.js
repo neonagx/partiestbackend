@@ -20,6 +20,7 @@ function getAll(req, res){
 //POST
 function createProfessional(req, res){
   var professional = new Professional(req.body)
+  professional.postedBy = req.user
 
   professional.save(function(err, savedProfessional){
     if(err) res.json({message: 'Could not create professional event b/c:' + err})
@@ -34,7 +35,7 @@ function getProfessional(req, res){
 
   Professional.findById(id, function(err, professional){
     if(err) res.json({message: 'Could not find professional event b/c: ' + err})
-    
+
     res.json(professional)
   }).select('-__v')
 }
@@ -50,7 +51,7 @@ function updateProfessional(req, res){
     if(req.body.partyTitle) professional.partyTitle = req.body.partyTitle
     if(req.body.company) professional.company = req.body.company
     if(req.body.video) professional.video = req.body.video
-    if(req.body.map) professional.map = req.body.map
+    if(req.body.img) professional.img = req.body.img
     if(req.body.location) professional.location = req.body.location
     if(req.body.email) professional.email = req.body.email
     if(req.body.cellPhone) professional.cellPhone = req.body.cellPhone
@@ -59,6 +60,7 @@ function updateProfessional(req, res){
     if(req.body.description) professional.description = req.body.description
     if(req.body.publicOrPrivate) professional.publicOrPrivate = req.body.publicOrPrivate
     if(req.body.sponsors) professional.sponsors = req.body.sponsors
+    if(req.body.postedBy) professional.postedBy = req.body.postedBy
 
     professional.save(function(err, updatedProfessional){
       if(err) res.json({message: 'Cannot update b/c: ' + err})

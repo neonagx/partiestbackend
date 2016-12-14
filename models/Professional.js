@@ -5,7 +5,7 @@ var ProfessionalSchema = mongoose.Schema({
   partyTitle: String,
   company: String,
   video: String,
-  map: String,
+  img: String,
   location: String,
   email: String,
   cellPhone: String,
@@ -13,7 +13,8 @@ var ProfessionalSchema = mongoose.Schema({
   attendees: Number,
   description: String,
   publicOrPrivate: String,
-  sponsors: String
+  sponsors: String,
+  postedBy: {type: mongoose.Schema.Types.ObjectId, ref: "User"}
 })
 
 module.exports = mongoose.model('Professional', ProfessionalSchema)
