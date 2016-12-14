@@ -20,7 +20,7 @@ function getAll(req, res){
 //POST
 function createProfessional(req, res){
   var professional = new Professional(req.body)
-  professional.postedBy = req.user
+  professional.postedBy = req.decoded._id
 
   professional.save(function(err, savedProfessional){
     if(err) res.json({message: 'Could not create professional event b/c:' + err})
