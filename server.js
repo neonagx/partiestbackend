@@ -12,7 +12,8 @@ require('dotenv').config()
 
 var mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost:27017/partiest')
+var db = process.env.MONGODB_URI || 'mongodb://localhost/partiest'
+mongoose.connect(db)
 
 // Initial VIEW ENGINE NOT WORKING
 // view engine setup
@@ -40,7 +41,8 @@ app.use(routes)
 
 app.use(addFailedAuthHeader)
 
-app.listen(3000)
+var port = process.env.PORT || 3000
+app.listen(port)
 
 function validateContentType(req, res, next) {
   var methods = ['PUT', 'PATCH', 'POST'];
