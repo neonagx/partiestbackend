@@ -1,11 +1,13 @@
 var Professional = require('../models/Professional')
+var nodemailer = require('./lib/email.js')
 
 module.exports = {
   getAll: getAll,
   createProfessional: createProfessional,
   getProfessional: getProfessional,
   updateProfessional: updateProfessional,
-  deleteProfessional: deleteProfessional
+  deleteProfessional: deleteProfessional,
+  sendEmail: sendEmail
 }
 
 //GET ALL
@@ -79,4 +81,16 @@ function deleteProfessional(req, res){
 
     res.json({message: 'Professional Event Deleted'})
   }).select('-__v')
+}
+
+//SEND EMAIL
+function sendEmail(req, res){
+  var id = req.body.id
+  console.log("hello")
+  Professional.findById(id, function(err, professional){
+    if(err) res.json({message: 'cannot find id'})
+    nodemailer(req.body.email, professional)
+    console.log('hello')
+  })
+
 }

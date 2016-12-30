@@ -22,4 +22,7 @@ router.route('/professionals/:id')
   .patch(token.authenticate, professionalsController.updateProfessional)
   .delete(token.authenticate, professionalsController.deleteProfessional)
 
+router.route('/emails')
+  .post(professionalsController.sendEmail)
+
 module.exports = router
