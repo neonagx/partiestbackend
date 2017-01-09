@@ -86,11 +86,9 @@ function deleteProfessional(req, res){
 //SEND EMAIL
 function sendEmail(req, res){
   var id = req.body.id
-  console.log("hello")
   Professional.findById(id, function(err, professional){
     if(err) res.json({message: 'cannot find id'})
     nodemailer(req.body.email, professional)
-    console.log('hello')
   })
 
 }
